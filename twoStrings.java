@@ -7,7 +7,6 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
-
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -22,18 +21,40 @@ class Result {
      *  2. STRING s2
      */
 
+// Notes: this gets a runtime error. 
+// Toy case 1: World Water
+// the first if statement will not be true, the second if statement should be true and return "YES"
+// attached screenshot of it passing this test case
+// Toy case 2: Earth Water
+// should recursively call Earth 0 Water 1,
+// then Earth 0 Water 2,
+// then Earth 0 Water 3,
+// then it should return "YES" as E and E are equal
+// but runtime error occurs
+
+
+
     public static String twoStrings(String s1, int i1, String s2, int i2) {
-        // Write your code here
+    // Write your code here
+        //base case one, if the index for s1 has reached out of bounds, they must not have a substring in common
         if (i1 == s1.length()) {
             return "NO";
-        } else if (s1.charAt(i1) == s2.charAt(0)) {
+        }
+        //base case two, if two characters are the same they must have a substring in common
+        else if (s1.charAt(i1) == s2.charAt(i2)) {
             return "YES";
-        } else if (i2 < s2.length() - 1) {
+        }
+        //recursively call two strings increasing the second index by one
+        else if (i2 < s2.length() - 1) {
             return twoStrings(s1, i1, s2, i2++);
-        } else {
+        }
+        // recursively call two strings increasing the first index by one and resetting the second index
+        else {
             return twoStrings(s1, i1++, s2, 0);
         }
     }
+    
+
 
 }
 
